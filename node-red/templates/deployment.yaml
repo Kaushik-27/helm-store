@@ -2,21 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "node-red.fullname" . }}
-  {{- if .Values.deploymentAnnotations }}
-  annotations:
-    {{- range $key, $value := .Values.deploymentAnnotations }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
-  {{- end }}
   labels:
     app.kubernetes.io/name: {{ include "node-red.name" . }}
     helm.sh/chart: {{ include "node-red.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  replicas: 1
-  strategy:
-    type: {{ .Values.strategyType }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "node-red.name" . }}
@@ -26,12 +18,6 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "node-red.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
-      {{- if .Values.podAnnotations }}
-      annotations:
-        {{- range $key, $value := .Values.podAnnotations }}
-        {{ $key }}: {{ $value | quote }}
-        {{- end }}
-      {{- end }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -43,32 +29,22 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: {{ .Values.livenessProbePath }}
+              path: /
               port: http
           readinessProbe:
             httpGet:
-              path: {{ .Values.readinessProbePath }}
+              path: /
               port: http
           env:
             - name: FLOWS
               value: "{{ .Values.flows }}"
-            - name: NODE_RED_ENABLE_SAFE_MODE
-              value: "{{ .Values.safeMode }}"
-            - name: NODE_RED_ENABLE_PROJECTS
-              value: "{{ .Values.enableProjects }}"
             - name: NODE_OPTIONS
               value: "{{ .Values.nodeOptions }}"
             - name: TZ
               value: "{{ .Values.timezone }}"
-          {{- with .Values.extraEnvs }}
-{{ toYaml . | indent 12 }}
-          {{- end }}
           volumeMounts:
             - name: data
               mountPath: /data
-{{- if .Values.persistence.subPath }}
-              subPath: {{ .Values.persistence.subPath }}
-{{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
