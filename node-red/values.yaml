@@ -24,7 +24,6 @@ extraEnvs: []
 timezone: "UTC"
 
 service:
-  containerPort: 1880
   hostPort: 1880
   annotations: {}
   labels: {}
