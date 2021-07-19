@@ -1,21 +1,14 @@
-apiVersion: v2
-appVersion: 1.3.5
-description: Node-RED is low-code programming for event-driven applications
+apiVersion: v1
+appVersion: 1.0.6-12
+description: DEPRECATED - Node-RED is low-code programming for event-driven applications
 name: node-red
-version: 8.1.0
-kubeVersion: ">=1.16.0-0"
+version: 2.0.3
 keywords:
-- nodered
-- node-red
-home: https://github.com/k8s-at-home/charts/tree/master/charts/stable/node-red
+  - nodered
+  - node-red
+home: https://github.com/billimek/billimek-charts/tree/master/charts/node-red
 icon: https://nodered.org/about/resources/media/node-red-icon-2.png
 sources:
-- https://github.com/node-red/node-red-docker
-- https://github.com/k8s-at-home/charts/tree/master/charts/node-red
-maintainers:
-- name: billimek
-  email: jeff@billimek.com
-dependencies:
-- name: common
-  repository: https://library-charts.k8s-at-home.com
-  version: 3.3.0
+  - https://github.com/node-red/node-red-docker
+  - https://github.com/billimek/billimek-charts/tree/master/charts/node-red
+deprecated: true
