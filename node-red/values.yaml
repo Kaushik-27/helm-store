@@ -24,16 +24,8 @@ extraEnvs: []
 timezone: "UTC"
 
 service:
-  type: ClusterIP
-  port: 1880
-  ## Specify the nodePort value for the LoadBalancer and NodePort service types.
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
-  ##
-  nodePort: 30001
-  ## Provide any additional annotations which may be required. This can be used to
-  ## set the LoadBalancer service type to internal only.
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
-  ##
+  containerPort: 1880
+  hostPort: 1880
   annotations: {}
   labels: {}
   ## Use loadBalancerIP to request a specific static IP,
