@@ -3,4 +3,4 @@ appVersion: "latest-12"
 description: Kaushik Test App
 name: nodered-docker
 version: latest-12
-icon: file://./The-Matrix.ico
+icon: file://./The-Matrix.png
