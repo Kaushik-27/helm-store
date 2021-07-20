@@ -22,7 +22,6 @@ service:
 # Port which is used to publish the application on the Node, this differs from the Container port
 hostPort: 7777
 
-
 # Ingress settings, currently not enabled / implemented
 ingress:
   enabled: false
