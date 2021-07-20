@@ -1,42 +1,29 @@
-# Default values for node-red.
+# Default values for node-red github.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+#scale: 1
 
 image:
   repository: nodered/node-red-docker
-  tag: 0.19.4-v8
+  tag: latest-12
   pullPolicy: IfNotPresent
 
 nameOverride: ""
 fullnameOverride: ""
 
-flows: "flows.json"
-# nodeOptions: ""
-timezone: "UTC"
-
+# Settings for the service, currently not enabled / implemented
 service:
+  enabled: true
   type: ClusterIP
   port: 1880
-  ## Specify the nodePort value for the LoadBalancer and NodePort service types.
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
-  ##
-  # nodePort:
-  ## Provide any additional annotations which may be required. This can be used to
-  ## set the LoadBalancer service type to internal only.
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
-  ##
-  annotations: {}
-  labels: {}
-  ## Use loadBalancerIP to request a specific static IP,
-  ## otherwise leave blank
-  ##
-  loadBalancerIP:
-  # loadBalancerSourceRanges: []
-  ## Set the externalTrafficPolicy in the Service to either Cluster or Local
-  # externalTrafficPolicy: Cluster
+  hostPort: 1880
 
+# Port which is used to publish the application on the Node, this differs from the Container port
+hostPort: 7777
+
+
+# Ingress settings, currently not enabled / implemented
 ingress:
   enabled: false
   annotations: {}
@@ -49,23 +36,6 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
-persistence:
-  enabled: false
-  ## node-red data Persistent Volume Storage Class
-  ## If defined, storageClassName: <storageClass>
-  ## If set to "-", storageClassName: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClassName spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
-  ##
-  # storageClass: "-"
-  ##
-  ## If you want to reuse an existing claim, you can pass the name of the PVC using
-  ## the existingClaim variable
-  # existingClaim: your-claim
-  accessMode: ReadWriteOnce
-  size: 5Gi
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -84,3 +54,14 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+appSandbox:
+  enabled: false
+
+# Custom resource to enable device specific download
+customResources:
+  enablespecificdownload: false
+
+# To be added to the database server pod(s)
+podAnnotations: {}
